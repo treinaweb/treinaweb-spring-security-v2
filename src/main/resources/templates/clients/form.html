@@ -13,6 +13,8 @@
           
           <form method="post" th:object="${clientForm}">
 
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
             <div class="form-group">
               <label for="name">Nome*</label>
               <input type="text" th:field="*{name}" required class="form-control">
