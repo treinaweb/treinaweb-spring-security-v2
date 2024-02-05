@@ -41,7 +41,7 @@ public class AuthenticatedUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return employee.getResignationDate() == null;
     }
 
     @Override
