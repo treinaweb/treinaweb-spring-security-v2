@@ -2,6 +2,7 @@ package br.com.treinaweb.twprojects.web.clients.controllers;
 
 import java.util.Map;
 
+// import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,6 +37,7 @@ public class ClientController {
         return new ModelAndView("clients/index", model);
     }
 
+    // @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/create")
     public ModelAndView create() {
         var model = Map.of(
@@ -45,6 +47,7 @@ public class ClientController {
         return new ModelAndView("clients/form", model);
     }
 
+    // @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/create")
     public String create(@Valid ClientForm clientForm, BindingResult result, Model model) {
         if (result.hasErrors()) {

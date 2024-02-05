@@ -2,21 +2,34 @@ package br.com.treinaweb.twprojects.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+// import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import br.com.treinaweb.twprojects.core.services.auth.Authority;
+
 @Configuration
 @EnableWebSecurity
+// @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+
+    private static final String[] ADMIN_MATCHERS = {
+        "/*/create",
+        "/*/edit/**",
+        "/*/delete/**",
+    };
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
             .authorizeHttpRequests(customizer -> customizer
+                .requestMatchers(ADMIN_MATCHERS)
+                    .hasAuthority(Authority.ADMIN.name())
                 .anyRequest().authenticated()
+                // .anyRequest().permitAll()
             )
             .formLogin(customizer -> customizer
                 .loginPage("/auth/login")
