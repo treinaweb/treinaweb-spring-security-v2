@@ -65,5 +65,8 @@ public class Employee {
 
     @ManyToMany(mappedBy = "team")
     private List<Project> projects;
+
+    @Column(nullable = false)
+    private String password;
     
 }

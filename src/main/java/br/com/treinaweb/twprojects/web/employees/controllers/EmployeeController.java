@@ -3,6 +3,7 @@ package br.com.treinaweb.twprojects.web.employees.controllers;
 import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class EmployeeController {
 
     private final EmployeeMapper employeeMapper;
+    private final PasswordEncoder passwordEncoder;
     private final EmployeeRepository employeeRepository;
     private final PositionRepository positionRepository;
 
@@ -67,6 +69,8 @@ public class EmployeeController {
             return "employees/form";
         }
         var employee = employeeMapper.toEmployee(employeeForm);
+        var passwordHash = passwordEncoder.encode("change-me");
+        employee.setPassword(passwordHash);
         employeeRepository.save(employee);
         return "redirect:/employees";
     }
@@ -95,7 +99,7 @@ public class EmployeeController {
         var employee = employeeRepository.findById(id)
             .orElseThrow(EmployeeNotFoundException::new);
         var employeeData = employeeMapper.toEmployee(employeeForm);
-        BeanUtils.copyProperties(employeeData, employee, "id");
+        BeanUtils.copyProperties(employeeData, employee, "id", "password");
         employeeRepository.save(employee);
         return "redirect:/employees";
     }
