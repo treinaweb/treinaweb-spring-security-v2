@@ -18,7 +18,10 @@ public class AuthenticatedUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.NO_AUTHORITIES;
+        var authority = employee.getPosition().getName().equals("Gerente de Projetos") 
+            ? Authority.ADMIN 
+            : Authority.USER;
+        return AuthorityUtils.createAuthorityList(authority.name());
     }
 
     @Override
