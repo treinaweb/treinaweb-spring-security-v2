@@ -26,5 +26,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query("select e from Employee e where e.position.name <> 'Gerente de projetos'")
     List<Employee> findTeam();
+
+    Optional<Employee> findByEmail(String email);
     
 }
