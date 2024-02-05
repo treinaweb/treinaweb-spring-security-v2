@@ -7,7 +7,7 @@
         <div class="card">
           <div class="card-header">
             <div class="card-title">Listagem de Clientes</div>
-            <div class="card-tools">
+            <div class="card-tools" sec:authorize="hasAuthority('ADMIN')">
               <a
                 th:href="@{/clients/create}"
                 class="btn btn-sm btn-primary"
@@ -27,7 +27,7 @@
                   <th scope="col">Nome</th>
                   <th scope="col">E-mail</th>
                   <th scope="col">Telefone</th>
-                  <th scope="col">Ações</th>
+                  <th scope="col" sec:authorize="hasAuthority('ADMIN')">Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -36,7 +36,7 @@
                   <td th:text="${client.name}">Cleyson Lima</td>
                   <td th:text="${client.email}">cleyson@mail.com</td>
                   <td th:text="${client.phone}">(11) 99999-9999</td>
-                  <td>
+                  <td sec:authorize="hasAuthority('ADMIN')">
                     <a
                       th:href="@{/clients/edit/{id} (id=${client.id})}"
                       class="btn btn-sm btn-primary"

@@ -7,7 +7,7 @@
         <div class="card">
           <div class="card-header">
             <div class="card-title">Listagem de Projetos</div>
-            <div class="card-tools">
+            <div class="card-tools" sec:authorize="hasAuthority('ADMIN')">
               <a
                 th:href="@{/projects/create}"
                 class="btn btn-sm btn-primary"
@@ -54,6 +54,7 @@
                       th:href="@{/projects/edit/{id} (id=${project.id})}"
                       class="btn btn-sm btn-primary"
                       role="button"
+                      sec:authorize="hasAuthority('ADMIN')"
                     >
                       Editar
                     </a>
@@ -62,6 +63,7 @@
                       class="btn btn-sm btn-danger"
                       role="button"
                       onclick="return confirm('Tem certeza que deseja excluir?');"
+                      sec:authorize="hasAuthority('ADMIN')"
                     >
                       Excluir
                     </a>

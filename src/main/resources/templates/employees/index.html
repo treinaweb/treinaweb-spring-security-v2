@@ -7,7 +7,7 @@
         <div class="card">
           <div class="card-header">
             <div class="card-title">Listagem de Funcionários</div>
-            <div class="card-tools">
+            <div class="card-tools" sec:authorize="hasAuthority('ADMIN')">
               <a
                 th:href="@{/employees/create}"
                 class="btn btn-sm btn-primary"
@@ -50,6 +50,7 @@
                       th:href="@{/employees/edit/{id} (id=${employee.id})}"
                       class="btn btn-sm btn-primary"
                       role="button"
+                      sec:authorize="hasAuthority('ADMIN')"
                     >
                       Editar
                     </a>
@@ -58,6 +59,7 @@
                       class="btn btn-sm btn-danger"
                       role="button"
                       onclick="return confirm('Tem certeza que deseja excluir?');"
+                      sec:authorize="hasAuthority('ADMIN')"
                     >
                       Excluir
                     </a>
