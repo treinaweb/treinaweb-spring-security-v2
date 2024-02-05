@@ -10,11 +10,15 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import br.com.treinaweb.twprojects.core.services.auth.Authority;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 // @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+
+    private final AuthConfigProperties authConfigProperties;
 
     private static final String[] ADMIN_MATCHERS = {
         "/*/create",
@@ -41,6 +45,10 @@ public class SecurityConfig {
                     "/auth/logout", "GET"
                 ))
                 .logoutSuccessUrl("/auth/login")
+            )
+            .rememberMe(customizer -> customizer
+                .key(authConfigProperties.getRememberMeToken())
+                .tokenValiditySeconds(authConfigProperties.getRememberMeValiditySeconds())
             )
             .build();
     }
